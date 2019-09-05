@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e -u
+
+KEYS_DIR=/mnt/data_disk/keys
+
+cd $(dirname $0)
+
+docker run --rm -v $KEYS_DIR/web:/keys concourse/concourse \
+  generate-key -t rsa -f /keys/session_signing_key
+
+docker run --rm -v $KEYS_DIR/web:/keys concourse/concourse \
+  generate-key -t ssh -f /keys/tsa_host_key
+
+docker run --rm -v $KEYS_DIR/worker:/keys concourse/concourse \
+  generate-key -t ssh -f /keys/worker_key
+
+sudo cp $KEYS_DIR/worker/worker_key.pub $KEYS_DIR/web/authorized_worker_keys
+sudo cp $KEYS_DIR/web/tsa_host_key.pub $KEYS_DIR/worker

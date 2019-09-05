@@ -1,0 +1,13 @@
+---
+configs:
+  public_ip: 192.168.33.10
+  port: 8080
+  vm:
+    cpus: 2
+    memory: 4096
+    vdi_file: db_data_disk.vdi
+    vdi_size: 200
+  concourse:
+    user: test
+    pass: test
+    main_team_user: test
