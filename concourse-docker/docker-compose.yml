@@ -50,3 +50,9 @@ services:
       options:
         max-file: "5"
         max-size: "10m"
+
+  registry:
+    image: registry:latest
+    volumes: ["/mnt/data_disk/registry:/var/lib/registry"]
+    ports:
+      - 5000:5000
